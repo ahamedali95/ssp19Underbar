@@ -111,6 +111,9 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    if (isSorted) {
+      array = array.reverse();
+    }
     var original = [];
 
     for (var i = 0; i < array.length; i++) {
@@ -231,8 +234,8 @@
     //   return !!callBack(item) && startValue;
     // }, true);
 
-    if (collection.length === 0) {
-      return true;
+    if (callBack === undefined) {
+      return collection[collection.length-1];
     }
     if (Array.isArray(collection)) {
       for (var i = 0; i < collection.length; i++) {
@@ -254,8 +257,8 @@
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, callBack) {
-    if (collection.length === 0) {
-      return false;
+    if(callBack === undefined){
+        return _.contains(collection, true);
     }
 
     if (Array.isArray(collection)) {
@@ -281,7 +284,6 @@
         obj[key] = value;
       });
     });
-
     return obj;
   };
 
@@ -293,7 +295,6 @@
         }
       });
     });
-    
     return obj;
   };
 
